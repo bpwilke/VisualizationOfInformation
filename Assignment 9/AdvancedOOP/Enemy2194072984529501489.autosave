@@ -1,0 +1,59 @@
+class Enemy extends GameObject
+{
+  private float health;
+  private float healthReduceRate;
+  
+  private Boolean isDead = false; 
+  
+
+  Enemy(PVector initialPosition)
+  {
+    super(initialPosition, loadImage("enemy.png"), 75, 79);
+    healthReduceRate = 5;
+    velocity = 3;
+  }
+
+  void drawHealth()  // this function draws health circle and numerical display
+  {
+    stroke(244,238,66);
+    noFill();
+    ellipseMode(CENTER);
+    pushMatrix();
+    translate(position.x, position.y);
+    ellipse(0, 0, health, health);
+    text(int(health), 35, 45);
+    popMatrix();
+  }
+  
+  void wallCollissionAndAnimate()  // this function will move the enemy automatically. 
+  {
+    position.x += velocity;
+    
+    if(position.x > (width - 35))
+    {
+        velocity = -velocity;
+    }
+    
+    if(position.x < 35)
+    {
+       velocity = -velocity; 
+    }
+    
+  }
+
+  void reduceHealth()
+  {
+     health = health - healthReduceRate; 
+     if(health <= 0)
+     {
+       health = 0;
+       isDead = true;
+     }
+  }
+  
+  void setHealth(float health)
+  {
+    this.health = health;
+  }
+
+}
